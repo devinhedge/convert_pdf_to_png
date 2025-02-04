@@ -1,0 +1,78 @@
+
+
+**Goal:** Develop a Python command-line tool to convert PDF files into PNG images, adhering to best practices for robustness, resilience, and extensibility.
+
+**Specific Requirements:**
+
+1. **Command-Line Interface:**
+    *   Use the `argparse` library to create a command-line interface with the following arguments:
+        *   `--pdf_path` or `-p`: (Required) The path to the input PDF file.
+        *   `--output_dir` or `-o`: (Required) The path to the directory where PNG files will be saved.
+        *   `--dpi` or `-d`: (Optional, default=200) The resolution (DPI) for the generated PNG images.
+    *   Implement a descriptive help message for each argument, and for the program as a whole.
+
+2. **`convert_pdf_to_png` Function:**
+    *   Define a function called `convert_pdf_to_png(pdf_path, output_dir, dpi)` that encapsulates the conversion logic.
+    *   **Input Validation:**
+        *   Check if `pdf_path` is a valid file path and that the PDF file exists and is readable. Use a dedicated function for PDF validation.
+        *   Check that only ONE PDF file is specfied as an input file.
+        *   Check if `output_dir` is a valid directory path. Create the directory if it doesn't exist, raising an exception if directory creation fails.
+        *   Validate `dpi` to be a positive integer.  Provide a reasonable default that is useful for Optical Character Recognition (OCR) applications.
+    *   **PDF Conversion:**
+        *   Use the `pdf2image` library to convert each page of the PDF into a PNG image.
+        *   Implement a loop to iterate through the pages of the PDF.
+        *   Save each PNG image in the specified `output_dir`, with a filename format of `<original_pdf_filename>_page_<page_number>.png`.
+    *   **Error Handling:**
+        *   Catch specific exceptions from the `pdf2image` library (e.g., `PDFInfoNotInstalledError`, `PIL.UnidentifiedImageError`).
+        *   Log all caught exceptions using the `logging` module, providing relevant details (e.g., the original file path, exception type).
+        *   Raise user-friendly exceptions with informative error messages for common errors.
+        *   If any conversion for a particular page fails, log it and continue to convert other pages, not halting the program entirely.
+
+3. **Error Handling and Logging:**
+    *   Use the `logging` module for error handling and informational messages.
+    *   Configure the logger to:
+        *   Log to a file named `pdf_to_png.log`.
+        *   Log to the console.
+        *   Include timestamps, log levels (DEBUG, INFO, WARNING, ERROR, CRITICAL), and message in each log entry.
+    *   Use the `try...except` blocks around key operations to prevent script crashes and provide useful feedback.
+
+4. **Resilience:**
+    *   Handle `KeyboardInterrupt` (Ctrl+C) gracefully, printing a message about exiting and allowing the program to terminate cleanly.
+    *   Ensure proper cleanup of resources (file handles, etc.).
+
+5. **Extensibility and Maintainability:**
+    *   The core logic is encapsulated in the `convert_pdf_to_png` function, allowing for easier testing and potential reuse.
+    *   Use clear and descriptive function and variable names.
+    *   Include docstrings for all functions, explaining their purpose, arguments, and return values, and any exceptions that may be raised.
+    *   Use type hints for function parameters and return values.
+    *   Adhere to PEP 8 style guidelines. Use a linter (e.g., `flake8`) to verify.
+
+6. **Dependencies:**
+    *   Include a `requirements.txt` file listing all necessary libraries (`pdf2image`, `Pillow`).
+    *   Instruct users to create a virtual environment.
+
+7.  **Testing:**
+    * Provide instructions to write a simple test case using pytest to check the function works for one pdf page.
+
+**Implementation Guidance:**
+
+*   Use `os.path` functions for file and directory manipulation.
+*   Use `Pathlib` for path management.
+*   Use a context manager for opening files if necessary.
+*   Consider the use of `tqdm` if handling many files, but make it optional.
+*   Provide example usage in the script's main execution block.
+
+**Example Usage:**
+
+```bash
+# Create and activate a virtual environment:
+python3 -m venv venv
+source venv/bin/activate  # On Linux/macOS
+venv\Scripts\activate  # On Windows
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the script:
+python pdf_converter.py -p my_document.pdf -o output_directory -d 300
+```

@@ -1,0 +1,31 @@
+
+---
+
+**Prompt:**  
+Create a Python script that performs the following tasks:
+
+1. Accepts two command-line arguments:
+   - `arg1`: The path to a PDF file.
+   - `arg2`: The path to a directory where PNG files should be saved.
+
+2. Defines a function called `convertPDF2PNG(pdf_path, output_dir)`, which:
+   - Checks if the specified PDF file exists.
+   - Validates that the file is a valid and readable PDF.
+   - Ensures the specified output directory exists, creating it if necessary.
+   - Converts each page of the PDF into a PNG file.
+   - Saves each PNG file in the output directory with a filename format of:
+     ```
+     <original_pdf_filename>_page_<page_number>.png
+     ```
+   
+3. Calls `convertPDF2PNG(arg1, arg2)` after parsing command-line arguments.
+
+4. Implements proper error handling for:
+   - Missing or incorrect command-line arguments.
+   - Non-existent PDF files.
+   - Invalid or unreadable PDFs.
+   - Issues with writing PNG files to the directory.
+
+5. Uses a suitable Python library (such as `pdf2image`) for PDF-to-PNG conversion.
+
+---
